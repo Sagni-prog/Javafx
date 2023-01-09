@@ -10,6 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 
 public class LoginPage extends Application {
@@ -89,5 +92,17 @@ class NotePad{
         Button btn = new Button("hello");
         Scene sc = new Scene(btn,600,400);
       stage.setScene(sc);
+    }
+}
+
+class Menu{
+    public MenuBar myMenu(){
+
+
+        Menu menu1 = new Menu("Menu");
+        MenuBar menuBar = new MenuBar();
+
+        menuBar.getMenus().addAll(menu1);
+        return menuBar;
     }
 }
