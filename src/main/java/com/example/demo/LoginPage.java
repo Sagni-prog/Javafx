@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class LoginPage extends Application {
@@ -92,13 +93,17 @@ public class LoginPage extends Application {
 }
 class NotePad{
     public void NotePadaUi(Stage stage){
-        Button btn = new Button("hello");
+        
+        TextArea tPad = new TextArea();
+        tPad.setMinHeight(800);
+        tPad.setMinWidth(800);
+        tPad.setStyle("-fx-border: none");
 
         Menus menu = new Menus();
         MenuBar menuBar = menu.myMenu();
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(menuBar,btn);
+        vBox.getChildren().addAll(menuBar,tPad);
         Scene sc = new Scene(vBox,600,400);
       stage.setScene(sc);
     }
@@ -108,10 +113,17 @@ class Menus{
 
     public MenuBar myMenu(){
 
-        Menu menu1 = new Menu("Menu");
+      
         MenuBar menuBar = new MenuBar();
+        Menu menuFile = new Menu("File");
+        menuFile.setStyle("-fx-font-size: 16");
 
-        menuBar.getMenus().addAll(menu1);
+        MenuItem open = new MenuItem("Open");
+        MenuItem save = new MenuItem("Save");
+        MenuItem saveas = new MenuItem("Save as");
+        menuFile.getItems().addAll(open,save,saveas);
+
+        menuBar.getMenus().addAll(menuFile);
         return menuBar;
     }
 }
