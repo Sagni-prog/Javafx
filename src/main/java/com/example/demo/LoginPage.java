@@ -28,6 +28,7 @@ public class LoginPage extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+        VBox vMain = new VBox();
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
         GridPane gridPane = new GridPane();
@@ -77,7 +78,9 @@ public class LoginPage extends Application {
 //        gridPane.setGridLinesVisible(true);
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setColumnSpan(buttonBox,2);
-        vBox.getChildren().add(gridPane);
+        vBox.getChildren().addAll(gridPane);
+
+        
         Scene scene = new Scene(vBox, 600, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -90,14 +93,20 @@ public class LoginPage extends Application {
 class NotePad{
     public void NotePadaUi(Stage stage){
         Button btn = new Button("hello");
-        Scene sc = new Scene(btn,600,400);
+
+        Menus menu = new Menus();
+        MenuBar menuBar = menu.myMenu();
+
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(menuBar,btn);
+        Scene sc = new Scene(vBox,600,400);
       stage.setScene(sc);
     }
 }
 
-class Menu{
-    public MenuBar myMenu(){
+class Menus{
 
+    public MenuBar myMenu(){
 
         Menu menu1 = new Menu("Menu");
         MenuBar menuBar = new MenuBar();
