@@ -1,15 +1,9 @@
 package com.example.demo;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -152,9 +146,9 @@ public class LoginPage extends Application {
         stage.setScene(scene);
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+//    public static void main(String[] args) {
+//        launch(args);
+//    }
 }
 class NotePad{
     TextArea tPad;
@@ -277,7 +271,7 @@ class Menus{
 
         trans.setOnAction(e-> {
             DirectoryTransverse directoryTransverse = new DirectoryTransverse();
-            directoryTransverse.transverse(stage);
+            directoryTransverse.directoryTransverseUi(stage);
         });
 
         copy.setOnAction(e -> {

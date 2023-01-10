@@ -105,7 +105,6 @@ public class Student {
 
     public void saveToDb(String name,String email,String password,double grade){
 
-
                 try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/db","sagni","123");
@@ -114,7 +113,6 @@ public class Student {
                     System.out.println(name);
            String sql = "insert into student(name,email,password,grade) values(?,?,?,?)";
 //           stmt.executeUpdate(sql);
-
 
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1,name);

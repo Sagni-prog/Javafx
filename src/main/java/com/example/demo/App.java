@@ -31,7 +31,7 @@ public class App extends Application {
 
         transbtn.setOnAction(e -> {
              DirectoryTransverse directoryTransverse = new DirectoryTransverse();
-             directoryTransverse.transverse(stage);
+             directoryTransverse.directoryTransverseUi(stage);
         });
         
         hBox.getChildren().addAll(notbtn,stdbtn,transbtn);
