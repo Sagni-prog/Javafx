@@ -24,8 +24,9 @@ public class Student {
     private TextField tfGrade = new TextField();
 
     private Button btnReg = new Button("Register");
+    private  Button toLogin = new Button("Login");
 
-    private Button btnCancel = new Button("Cancel");
+//    private Button toLogin = new Button("Login");
     public void studentRegistrationUi(Stage stage){
 
             VBox vMain = new VBox();
@@ -53,9 +54,9 @@ public class Student {
             btnReg.setMinWidth(100);
             btnReg.setStyle("-fx-background-color: #34aeeb; -fx-text-fill:white; -fx-font-size:16");
 
-            btnCancel.setMinHeight(35);
-            btnCancel.setMinWidth(100);
-            btnCancel.setStyle("-fx-background-color: #ed185f; -fx-text-fill:white; -fx-font-size:16");
+            toLogin.setMinHeight(35);
+            toLogin.setMinWidth(100);
+            toLogin.setStyle("-fx-background-color: #ed185f; -fx-text-fill:white; -fx-font-size:16");
 
             Label NameLabel  = new Label("Name: ");
             NameLabel.setStyle("-fx-font-size:16");
@@ -79,7 +80,7 @@ public class Student {
             gridPane.add(gradeLabel, 1, 3);
             gridPane.add(tfGrade, 2, 3);
             HBox buttonBox = new HBox(10);
-            buttonBox.getChildren().addAll(btnReg,btnCancel);
+            buttonBox.getChildren().addAll(btnReg, toLogin);
             buttonBox.setAlignment(Pos.CENTER);
 
 
@@ -92,6 +93,10 @@ public class Student {
                 double grade = Double.parseDouble(tfGrade.getText());
                saveToDb(name,email,password,grade);
             });
+
+        toLogin.setOnAction(e -> {
+            studentLoginUi(stage);
+        });
 //        gridPane.setGridLinesVisible(true);
             gridPane.setAlignment(Pos.CENTER);
             gridPane.setColumnSpan(buttonBox,2);
@@ -104,6 +109,67 @@ public class Student {
     }
 
     public void studentLoginUi(Stage stage){
+
+            VBox vMain = new VBox();
+            VBox vBox = new VBox();
+            vBox.setAlignment(Pos.CENTER);
+            GridPane gridPane = new GridPane();
+            gridPane.setHgap(5);
+            gridPane.setVgap(10);
+
+            tfEmail.setStyle("-fx-padding-top:30;");
+            tfEmail.setMinHeight(35);
+            tfEmail.setMinWidth(220);
+
+            tfPassword.setMinHeight(35);
+            tfPassword.setMinWidth(220);
+
+            Button btnLogin = new Button("Register");
+            btnLogin.setMinHeight(35);
+            btnLogin.setMinWidth(100);
+            btnLogin.setStyle("-fx-background-color: #34aeeb; -fx-text-fill:white; -fx-font-size:16");
+
+            btnReg.setMinHeight(35);
+            toLogin.setMinWidth(100);
+            toLogin.setStyle("-fx-background-color: #ed185f; -fx-text-fill:white; -fx-font-size:16");
+
+            Label userNameLabel  = new Label("Email: ");
+            userNameLabel.setStyle("-fx-font-size:16");
+
+            Label passwordLabel = new Label("Password: ");
+            passwordLabel.setStyle("-fx-font-size:16");
+
+            gridPane.add(userNameLabel, 1, 0);
+            gridPane.add(tfEmail, 2, 0);
+            gridPane.add(passwordLabel, 1, 1);
+            gridPane.add(tfPassword, 2, 1);
+            HBox buttonBox = new HBox(10);
+            buttonBox.getChildren().addAll(btnLogin, toLogin);
+            buttonBox.setAlignment(Pos.CENTER);
+
+
+            gridPane.add(buttonBox, 1, 3);
+
+            btnLogin.setOnAction(e -> {
+                if(tfEmail.getText().equals(userName) && tfPassword.getText().equals(password)){
+                    NotePad notePad = new NotePad();
+                    notePad.NotePadaUi(stage);
+                }else{
+                    System.out.println("it is not you");
+                }
+            });
+
+            toLogin.setOnAction(e -> {
+                studentLoginUi(stage);
+            });
+//        gridPane.setGridLinesVisible(true);
+            gridPane.setAlignment(Pos.CENTER);
+            gridPane.setColumnSpan(buttonBox,2);
+            vBox.getChildren().addAll(gridPane);
+
+
+            Scene scene = new Scene(vBox, 600, 400);
+            stage.setScene(scene);
 
     }
 

@@ -146,9 +146,6 @@ public class LoginPage extends Application {
         stage.setScene(scene);
     }
 
-//    public static void main(String[] args) {
-//        launch(args);
-//    }
 }
 class NotePad{
     TextArea tPad;
