@@ -17,14 +17,18 @@ public class Student {
     private static String userName = "";
     private static String password = "";
     private TextField tfEmail = new TextField();
-    private TextField tfPassword = new TextField();
+    private TextField tfid = new TextField();
 
     private TextField tfName = new TextField();
 
     private TextField tfGrade = new TextField();
 
     private Button btnReg = new Button("Register");
+
+    private Button btnLogin = new Button("Login");
     private  Button toLogin = new Button("Login");
+
+    private  Button toReg = new Button("Register");
 
 //    private Button toLogin = new Button("Login");
     public void studentRegistrationUi(Stage stage){
@@ -44,8 +48,8 @@ public class Student {
             tfEmail.setMinHeight(35);
             tfEmail.setMinWidth(220);
 
-            tfPassword.setMinHeight(35);
-            tfPassword.setMinWidth(220);
+            tfid.setMinHeight(35);
+            tfid.setMinWidth(220);
 
             tfGrade.setMinHeight(35);
             tfGrade.setMinWidth(220);
@@ -58,24 +62,24 @@ public class Student {
             toLogin.setMinWidth(100);
             toLogin.setStyle("-fx-background-color: #ed185f; -fx-text-fill:white; -fx-font-size:16");
 
-            Label NameLabel  = new Label("Name: ");
+            Label IdLabel = new Label("Id: ");
+            IdLabel.setStyle("-fx-font-size:16");
+
+            Label NameLabel = new Label("Name: ");
             NameLabel.setStyle("-fx-font-size:16");
 
-            Label userNameLabel  = new Label("Email: ");
-            userNameLabel.setStyle("-fx-font-size:16");
-
-            Label passwordLabel = new Label("Password: ");
-            passwordLabel.setStyle("-fx-font-size:16");
+            Label EmailLabel = new Label("Email: ");
+            EmailLabel.setStyle("-fx-font-size:16");
 
             Label gradeLabel = new Label("Grade: ");
             gradeLabel.setStyle("-fx-font-size:16");
 
-            gridPane.add(NameLabel, 1, 0);
+            gridPane.add(IdLabel, 1, 0);
             gridPane.add(tfName, 2, 0);
-            gridPane.add(userNameLabel, 1, 1);
+            gridPane.add(NameLabel, 1, 1);
             gridPane.add(tfEmail, 2, 1);
-            gridPane.add(passwordLabel, 1, 2);
-            gridPane.add(tfPassword, 2, 2);
+            gridPane.add(EmailLabel, 1, 2);
+            gridPane.add(tfid, 2, 2);
 
             gridPane.add(gradeLabel, 1, 3);
             gridPane.add(tfGrade, 2, 3);
@@ -87,11 +91,11 @@ public class Student {
             gridPane.add(buttonBox, 1, 5);
 
             btnReg.setOnAction(e -> {
-                String name = tfName.getText();
-                String email = tfEmail.getText();
-                String password = tfPassword.getText();
+                String id = tfName.getText();
+                String name = tfEmail.getText();
+                String email = tfid.getText();
                 double grade = Double.parseDouble(tfGrade.getText());
-               saveToDb(name,email,password,grade);
+               saveToDb(id,name,email,grade);
             });
 
         toLogin.setOnAction(e -> {
@@ -121,17 +125,17 @@ public class Student {
             tfEmail.setMinHeight(35);
             tfEmail.setMinWidth(220);
 
-            tfPassword.setMinHeight(35);
-            tfPassword.setMinWidth(220);
+            tfid.setMinHeight(35);
+            tfid.setMinWidth(220);
 
-            Button btnLogin = new Button("Register");
+            Button btnLogin = new Button("Login");
             btnLogin.setMinHeight(35);
             btnLogin.setMinWidth(100);
             btnLogin.setStyle("-fx-background-color: #34aeeb; -fx-text-fill:white; -fx-font-size:16");
 
-            btnReg.setMinHeight(35);
-            toLogin.setMinWidth(100);
-            toLogin.setStyle("-fx-background-color: #ed185f; -fx-text-fill:white; -fx-font-size:16");
+            toReg.setMinHeight(35);
+            toReg.setMinWidth(100);
+            toReg.setStyle("-fx-background-color: #ed185f; -fx-text-fill:white; -fx-font-size:16");
 
             Label userNameLabel  = new Label("Email: ");
             userNameLabel.setStyle("-fx-font-size:16");
@@ -142,16 +146,16 @@ public class Student {
             gridPane.add(userNameLabel, 1, 0);
             gridPane.add(tfEmail, 2, 0);
             gridPane.add(passwordLabel, 1, 1);
-            gridPane.add(tfPassword, 2, 1);
+            gridPane.add(tfid, 2, 1);
             HBox buttonBox = new HBox(10);
-            buttonBox.getChildren().addAll(btnLogin, toLogin);
+            buttonBox.getChildren().addAll(btnLogin, toReg);
             buttonBox.setAlignment(Pos.CENTER);
 
 
             gridPane.add(buttonBox, 1, 3);
 
             btnLogin.setOnAction(e -> {
-                if(tfEmail.getText().equals(userName) && tfPassword.getText().equals(password)){
+                if(tfEmail.getText().equals(userName) && tfid.getText().equals(password)){
                     NotePad notePad = new NotePad();
                     notePad.NotePadaUi(stage);
                 }else{
@@ -173,7 +177,7 @@ public class Student {
 
     }
 
-    public void saveToDb(String name,String email,String password,double grade){
+    public void saveToDb(String id,String name,String email,double grade){
 
                 try{
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -181,14 +185,14 @@ public class Student {
 
             Statement stmt=con.createStatement();
                     System.out.println(name);
-           String sql = "insert into student(name,email,password,grade) values(?,?,?,?)";
+           String sql = "insert into students(id,name,email,grade) values(?,?,?,?)";
 //           stmt.executeUpdate(sql);
 
             PreparedStatement preparedStatement = con.prepareStatement(sql);
-            preparedStatement.setString(1,name);
-            preparedStatement.setString(2,email);
-            preparedStatement.setString(3,password);
-            preparedStatement.setInt(4, (int) grade);
+            preparedStatement.setString(1,id);
+            preparedStatement.setString(2,name);
+            preparedStatement.setString(3,email);
+            preparedStatement.setDouble(4,grade);
 
             preparedStatement.executeUpdate();
 

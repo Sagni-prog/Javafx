@@ -16,6 +16,7 @@ public class App extends Application {
         HBox hBox = new HBox(5);
         hBox.setAlignment(Pos.CENTER);
         Button notbtn = new Button("Notepad");
+        Button adbtn = new Button("Admin");
         Button stdbtn = new Button("Student");
         Button transbtn = new Button("Transverse");
 
@@ -33,8 +34,13 @@ public class App extends Application {
              DirectoryTransverse directoryTransverse = new DirectoryTransverse();
              directoryTransverse.directoryTransverseUi(stage);
         });
+
+        adbtn.setOnAction(e -> {
+            Admin admin = new Admin();
+            admin.adminLoginUi(stage);
+        });
         
-        hBox.getChildren().addAll(notbtn,stdbtn,transbtn);
+        hBox.getChildren().addAll(notbtn,stdbtn,adbtn,transbtn);
         vBox.getChildren().add(hBox);
 
         Scene scene = new Scene(vBox,600,400);
