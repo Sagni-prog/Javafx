@@ -16,17 +16,25 @@ public class App extends Application {
         HBox hBox = new HBox(5);
         hBox.setAlignment(Pos.CENTER);
         Button notbtn = new Button("Notepad");
+        Button stdbtn = new Button("Student");
+        Button transbtn = new Button("Transverse");
+
         notbtn.setOnAction(e-> {
             LoginPage loginPage = new LoginPage();
             loginPage.loginUi(stage);
         });
-        Button stdbtn = new Button("Student");
+
         stdbtn.setOnAction(e->{
             Student student = new Student();
             student.studentUi(stage);
         });
+
+        transbtn.setOnAction(e -> {
+             DirectoryTransverse directoryTransverse = new DirectoryTransverse();
+             directoryTransverse.transverse(stage);
+        });
         
-        hBox.getChildren().addAll(notbtn,stdbtn);
+        hBox.getChildren().addAll(notbtn,stdbtn,transbtn);
         vBox.getChildren().add(hBox);
 
         Scene scene = new Scene(vBox,600,400);
