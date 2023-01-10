@@ -172,7 +172,6 @@ class NotePad{
         FileChooser.ExtensionFilter txt = new FileChooser.ExtensionFilter("TXT files (*.txt)","*.txt");
         fileChooser.getExtensionFilters().add(txt);
 
-
         File path = fileChooser.showSaveDialog(stage);
         if(path != null){
             try {

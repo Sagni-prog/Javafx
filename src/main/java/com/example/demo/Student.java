@@ -26,7 +26,7 @@ public class Student {
     private Button btnReg = new Button("Register");
 
     private Button btnCancel = new Button("Cancel");
-    public void studentUi(Stage stage){
+    public void studentRegistrationUi(Stage stage){
 
             VBox vMain = new VBox();
             VBox vBox = new VBox();

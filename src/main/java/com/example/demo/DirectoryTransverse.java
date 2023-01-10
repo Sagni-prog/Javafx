@@ -92,6 +92,7 @@ public class DirectoryTransverse {
     }
 
     public ArrayList openDir(String  path){
+
         File file = new File(path);
         File elements[] = file.listFiles();
 

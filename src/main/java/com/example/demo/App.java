@@ -26,7 +26,7 @@ public class App extends Application {
 
         stdbtn.setOnAction(e->{
             Student student = new Student();
-            student.studentUi(stage);
+            student.studentRegistrationUi(stage);
         });
 
         transbtn.setOnAction(e -> {
