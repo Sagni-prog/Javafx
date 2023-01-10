@@ -103,6 +103,10 @@ public class Student {
 
     }
 
+    public void studentLoginUi(Stage stage){
+
+    }
+
     public void saveToDb(String name,String email,String password,double grade){
 
                 try{
