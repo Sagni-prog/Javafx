@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,21 +11,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Admin {
 
     private TextField tfName = new TextField();
     private TextField tfEmail = new TextField();
     private TextField tfUsername = new TextField();
-
     private TextField tfPassword = new TextField();
-
-
-
 
     private Button btnReg = new Button("Register");
 
@@ -32,6 +26,7 @@ public class Admin {
     private  Button toLogin = new Button("Login");
 
     private  Button toReg = new Button("Register");
+    private Label err = new Label();
 
     public void adminRegistrationUi(Stage stage){
 
@@ -122,7 +117,10 @@ public class Admin {
     public void adminLoginUi(Stage stage){
 
         VBox vMain = new VBox();
-        VBox vBox = new VBox();
+        VBox vBox = new VBox(10);
+
+        err.setStyle("-fx-text-fill:#ed185f; -fx-font-size:16");
+        err.setPadding(new Insets(0,0,0,60));
         vBox.setAlignment(Pos.CENTER);
         GridPane gridPane = new GridPane();
         gridPane.setHgap(6);
@@ -132,8 +130,8 @@ public class Admin {
         tfUsername.setMinHeight(35);
         tfUsername.setMinWidth(220);
 
-        tfName.setMinHeight(35);
-        tfName.setMinWidth(220);
+        tfPassword.setMinHeight(35);
+        tfPassword.setMinWidth(220);
 
         Button btnLogin = new Button("Login");
         btnLogin.setMinHeight(35);
@@ -144,7 +142,7 @@ public class Admin {
         toReg.setMinWidth(100);
         toReg.setStyle("-fx-background-color: #ed185f; -fx-text-fill:white; -fx-font-size:16");
 
-        Label userNameLabel  = new Label("Email: ");
+        Label userNameLabel  = new Label("Username: ");
         userNameLabel.setStyle("-fx-font-size:16");
 
         Label passwordLabel = new Label("Password: ");
@@ -153,7 +151,7 @@ public class Admin {
         gridPane.add(userNameLabel, 1, 0);
         gridPane.add(tfUsername, 2, 0);
         gridPane.add(passwordLabel, 1, 1);
-        gridPane.add(tfName, 2, 1);
+        gridPane.add(tfPassword, 2, 1);
         HBox buttonBox = new HBox(10);
         buttonBox.getChildren().addAll(btnLogin, toReg);
         buttonBox.setAlignment(Pos.CENTER);
@@ -162,12 +160,15 @@ public class Admin {
         gridPane.add(buttonBox, 1, 3);
 
         btnLogin.setOnAction(e -> {
-//            if(tfUsername.getText().equals(userName) && tfName.getText().equals(password)){
-//                NotePad notePad = new NotePad();
-//                notePad.NotePadaUi(stage);
-//            }else{
-//                System.out.println("it is not you");
-//            }
+            System.out.println("hello");
+            try {
+                login(tfUsername.getText(),tfPassword.getText(),stage);
+                System.out.println("before pw =>" + tfPassword.getText());
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
         toReg.setOnAction(e -> {
@@ -176,16 +177,48 @@ public class Admin {
 //        gridPane.setGridLinesVisible(true);
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setColumnSpan(buttonBox,2);
-        vBox.getChildren().addAll(gridPane);
-
+        vBox.getChildren().addAll(err,gridPane);
 
         Scene scene = new Scene(vBox, 600, 400);
         stage.setScene(scene);
-
     }
 
-    public void login(String username,String password){
+    public void login(String username,String password,Stage stage) throws ClassNotFoundException, SQLException {
 
+        if (!username.equals("")) {
+            if(!password.equals("")) {
+                String url = "jdbc:mysql://localhost:3306/db";
+                Class.forName("com.mysql.cj.jdbc.Driver");
+
+                Connection conn = DriverManager.getConnection(url, "sagni", "123");
+                Statement stm = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                String sql = "select * from admin Where username='" + username + "';";
+                System.out.println(sql);
+                PreparedStatement pt = conn.prepareStatement(sql);
+                ResultSet rs = pt.executeQuery();
+
+
+                while (rs.next()) {
+
+                    String pwd = rs.getString("password");
+                    System.out.println(rs.getString("email"));
+                    System.out.println("pw from db => " + pwd);
+                    System.out.println("pw from user => " + password);
+                    if (password.equals(rs.getString("password"))) {
+                        Student student = new Student();
+                        student.studentRegistrationUi(stage);
+                    } else {
+                        err.setText("Wrong Credentials");
+                    }
+                }
+
+                conn.close();
+            }else{
+                err.setText("Password field can not be empty");
+            }
+        }else{
+            err.setText("Username field can not be empty");
+        }
     }
 
     public void saveToDb(String name,String email,String username,String password){

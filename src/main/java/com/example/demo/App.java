@@ -8,7 +8,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.File;
+
 public class App extends Application {
+
+    static File file = new File("/home/sagni/Documents");
     @Override
     public void start(Stage stage) throws Exception {
         VBox vBox = new VBox();
@@ -17,7 +21,7 @@ public class App extends Application {
         hBox.setAlignment(Pos.CENTER);
         Button notbtn = new Button("Notepad");
         Button adbtn = new Button("Admin");
-        Button stdbtn = new Button("Student");
+//        Button stdbtn = new Button("Student");
         Button transbtn = new Button("Transverse");
 
         notbtn.setOnAction(e-> {
@@ -25,10 +29,10 @@ public class App extends Application {
             loginPage.loginUi(stage);
         });
 
-        stdbtn.setOnAction(e->{
-            Student student = new Student();
-            student.studentRegistrationUi(stage);
-        });
+//        stdbtn.setOnAction(e->{
+//            Student student = new Student();
+//            student.studentRegistrationUi(stage);
+//        });
 
         transbtn.setOnAction(e -> {
              DirectoryTransverse directoryTransverse = new DirectoryTransverse();
@@ -40,13 +44,12 @@ public class App extends Application {
             admin.adminLoginUi(stage);
         });
         
-        hBox.getChildren().addAll(notbtn,stdbtn,adbtn,transbtn);
+        hBox.getChildren().addAll(notbtn,adbtn,transbtn);
         vBox.getChildren().add(hBox);
 
         Scene scene = new Scene(vBox,600,400);
         stage.setScene(scene);
         stage.show();
-
     }
     public static void main(String[] args){
         launch(args);

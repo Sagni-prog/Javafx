@@ -1,9 +1,11 @@
 package com.example.demo;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -26,7 +28,7 @@ public class Student {
     private Button btnReg = new Button("Register");
 
     private Button btnLogin = new Button("Login");
-    private  Button toLogin = new Button("Login");
+    private  Button toLogin = new Button("Cancel");
 
     private  Button toReg = new Button("Register");
 
@@ -35,12 +37,18 @@ public class Student {
 
             VBox vMain = new VBox();
             VBox vBox = new VBox();
+
+            AdminMenus menus = new AdminMenus();
+            MenuBar menuBar =  menus.myMenus(stage);
+
             vBox.setAlignment(Pos.CENTER);
+            vBox.setPadding(new Insets(50,0,0,0));
             GridPane gridPane = new GridPane();
             gridPane.setHgap(5);
             gridPane.setVgap(10);
+            vMain.getChildren().addAll(menuBar,vBox);
 
-            tfName.setStyle("-fx-padding-top:30;");
+        tfName.setStyle("-fx-padding-top:30;");
             tfName.setMinHeight(35);
             tfName.setMinWidth(220);
 
@@ -99,7 +107,10 @@ public class Student {
             });
 
         toLogin.setOnAction(e -> {
-            studentLoginUi(stage);
+            tfid.setText(null);
+            tfName.setText(null);
+            tfEmail.setText(null);
+            tfGrade.setText(null);
         });
 //        gridPane.setGridLinesVisible(true);
             gridPane.setAlignment(Pos.CENTER);
@@ -107,7 +118,7 @@ public class Student {
             vBox.getChildren().addAll(gridPane);
 
 
-            Scene scene = new Scene(vBox, 600, 400);
+            Scene scene = new Scene(vMain, 600, 400);
             stage.setScene(scene);
 
     }
@@ -198,5 +209,45 @@ public class Student {
 
                     con.close();
         }catch(Exception e){ System.out.println(e);}
+    }
+
+    public void studentList(){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db","sagni","123");
+
+            Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs=stmt.executeQuery("select * from students");
+            while(rs.next())
+
+                System.out.println(
+                        rs.getString("id") + ":" +
+                                rs.getString("name") + ":" +
+                                rs.getString("email") + ":" +
+                                rs.getString("grade")
+                );
+            con.close();
+        }catch(Exception e){ System.out.println(e);}
+    }
+
+    public void searchStudentById(String id) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+
+        Connection conn = DriverManager.
+                            getConnection(
+                                   "jdbc:mysql://localhost:3306/db",
+                                   "sagni","123");
+        String sql = "select * from students where id = '" + id + "';";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        ResultSet rs = preparedStatement.executeQuery();
+
+        while(rs.next()){
+                System.out.println(
+                        rs.getString("id") + ":" +
+                        rs.getString("name") + ":" +
+                        rs.getString("email") + ":" +
+                        rs.getString("grade")
+                );
+          }
     }
 }
